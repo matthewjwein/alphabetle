@@ -11,7 +11,7 @@ export const shareStatus = (
   navigator.clipboard.writeText(
     `${GAME_TITLE} ${solutionIndex} ${lost ? 'X' : guesses.length}/6${
       isHardMode ? '*' : ''
-    }\n\n` + generateEmojiGrid(guesses) + '\n https://alphabetle.herokuapp.com/ `\n'
+    }\n\n` + generateEmojiGrid(guesses) + '\nhttps://alphabetle.herokuapp.com/\n'
   )
 }
 
