@@ -6,6 +6,7 @@ import {
 import { useState, useEffect } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
+import { CellSmall } from './components/grid/CellSmall'
 import { Keyboard } from './components/keyboard/Keyboard'
 import { InfoModal } from './components/modals/InfoModal'
 import { StatsModal } from './components/modals/StatsModal'
@@ -204,8 +205,12 @@ function App() {
   return (
     <div className="pt-2 pb-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div className="flex w-80 mx-auto items-center mb-8 mt-20">
-        <h1 className="text-xl ml-2.5 grow font-bold dark:text-white">
-          {GAME_TITLE}
+        <h1 className="text-xl ml-2.5 grow font-bold dark:text-white flex justify-center mb-1">
+          <CellSmall key={1} value={'A'} status={3} />
+          <CellSmall key={2} value={'L'} status={1} />
+          <CellSmall key={3} value={'P'} status={0} />
+          <CellSmall key={4} value={'H'} status={1} />
+          <CellSmall key={5} value={'A'} status={3} />
         </h1>
         <InformationCircleIcon
           className="h-6 w-6 mr-2 cursor-pointer dark:stroke-white"

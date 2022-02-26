@@ -1,5 +1,7 @@
 import classnames from 'classnames'
 import { REVEAL_TIME_MS, VERY_CLOSE_DISTANCE, SOMEWHAT_CLOSE_DISTANCE } from '../../constants/settings'
+import React, { useState } from "react";
+import { LetterHintModal } from '../../components/modals/LetterHintModal'
 
 type Props = {
   value?: string
@@ -22,6 +24,45 @@ export const Cell = ({
 
   const absStatus = status ? Math.abs(status) : undefined
 
+  const [isLetterHintModalOpen, setIsLetterHintModalOpen] = useState(false)
+
+  const veryClose = absStatus != undefined && (absStatus > 0 && absStatus <= VERY_CLOSE_DISTANCE)
+  const somewhatClose = absStatus != undefined && (absStatus > VERY_CLOSE_DISTANCE && absStatus <= SOMEWHAT_CLOSE_DISTANCE)
+  
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    // Very close
+    if (veryClose) {
+      setIsLetterHintModalOpen(true);
+      return (
+       <div className={classes} style={{ animationDelay }}>
+         <div className="letter-container" style={{ animationDelay }}>
+            {value}
+         </div>
+       </div>)
+    }
+
+    // Somewhat close
+    if (somewhatClose) {
+      setIsLetterHintModalOpen(true);
+      return (
+       <div>
+         <div className={classes} style={{ animationDelay }}>
+           <div className="letter-container" style={{ animationDelay }}>
+              {value}
+           </div>
+         </div>
+         <div className={classes} style={{ animationDelay }}>
+           <div className="letter-container" style={{ animationDelay }}>
+              {value}
+           </div>
+         </div>
+       </div>
+       )
+     }
+  };
+
   const classes = classnames(
     'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-bold rounded dark:text-white',
     {
@@ -41,10 +82,21 @@ export const Cell = ({
   )
 
   return (
-    <div className={classes} style={{ animationDelay }}>
-      <div className="letter-container" style={{ animationDelay }}>
-        {value}
+    <div>
+      <div 
+          className={classes} 
+          style={{ animationDelay }} 
+          onClick={onClick}>
+        <div className="letter-container" style={{ animationDelay }}>
+          {value}
+        </div>
       </div>
+      <LetterHintModal
+        value={value}
+        veryClose={veryClose}
+        isOpen={isLetterHintModalOpen}
+        handleClose={() => setIsLetterHintModalOpen(false)}
+      />
     </div>
   )
 }
