@@ -2,10 +2,13 @@ import classnames from 'classnames'
 import { REVEAL_TIME_MS, VERY_CLOSE_DISTANCE, SOMEWHAT_CLOSE_DISTANCE } from '../../constants/settings'
 import React, { useState } from "react";
 import { LetterHintModal } from '../../components/modals/LetterHintModal'
+import { getPossibleLetters } from '../../lib/statuses'
 
 type Props = {
   value?: string
   status?: number
+  guess?: string
+  guesses?: string[]
   isRevealing?: boolean
   isCompleted?: boolean
   position?: number
@@ -14,6 +17,8 @@ type Props = {
 export const Cell = ({
   value,
   status,
+  guess,
+  guesses,
   isRevealing,
   isCompleted,
   position = 0,
@@ -28,39 +33,23 @@ export const Cell = ({
 
   const veryClose = absStatus != undefined && (absStatus > 0 && absStatus <= VERY_CLOSE_DISTANCE)
   const somewhatClose = absStatus != undefined && (absStatus > VERY_CLOSE_DISTANCE && absStatus <= SOMEWHAT_CLOSE_DISTANCE)
-  
+
   const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-
-    // Very close
-    if (veryClose) {
-      setIsLetterHintModalOpen(true);
-      return (
-       <div className={classes} style={{ animationDelay }}>
-         <div className="letter-container" style={{ animationDelay }}>
-            {value}
-         </div>
-       </div>)
+    if (!guesses) {
+      return
     }
-
-    // Somewhat close
-    if (somewhatClose) {
-      setIsLetterHintModalOpen(true);
-      return (
-       <div>
-         <div className={classes} style={{ animationDelay }}>
-           <div className="letter-container" style={{ animationDelay }}>
-              {value}
-           </div>
-         </div>
-         <div className={classes} style={{ animationDelay }}>
-           <div className="letter-container" style={{ animationDelay }}>
-              {value}
-           </div>
-         </div>
-       </div>
-       )
-     }
+    // Check if the user is clicking on the last guess
+    if (guess != guesses[guesses.length - 1]) {
+      return
+    }
+    if (position != undefined) {
+      let possibleLetters = getPossibleLetters(guesses, position)
+      if (possibleLetters.length <= 1) {
+        return
+      }
+    }
+    setIsLetterHintModalOpen(true);
   };
 
   const classes = classnames(
@@ -92,8 +81,11 @@ export const Cell = ({
         </div>
       </div>
       <LetterHintModal
+        guess={guess}
+        guesses={guesses}
+        position={position}
         value={value}
-        veryClose={veryClose}
+        absStatus={absStatus}
         isOpen={isLetterHintModalOpen}
         handleClose={() => setIsLetterHintModalOpen(false)}
       />

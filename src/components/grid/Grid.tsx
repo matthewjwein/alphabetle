@@ -20,6 +20,7 @@ export const Grid = ({ guesses, currentGuess, isRevealing }: Props) => {
       {guesses.map((guess, i) => (
         <CompletedRow
           key={i}
+          guesses={guesses}
           guess={guess}
           isRevealing={isRevealing && guesses.length - 1 === i}
         />

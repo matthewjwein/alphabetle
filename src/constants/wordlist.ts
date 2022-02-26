@@ -55,7 +55,7 @@ export const WORDS = [
   'point',
   'began',
   'heard',
-  'whole',
+  'below',
   'white',
   'given',
   'means',

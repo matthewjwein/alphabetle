@@ -3,10 +3,11 @@ import { Cell } from './Cell'
 
 type Props = {
   guess: string
+  guesses: string[]
   isRevealing?: boolean
 }
 
-export const CompletedRow = ({ guess, isRevealing }: Props) => {
+export const CompletedRow = ({ guess, guesses, isRevealing }: Props) => {
   const statuses = getGuessDistances(guess)
 
   return (
@@ -15,6 +16,8 @@ export const CompletedRow = ({ guess, isRevealing }: Props) => {
         <Cell
           key={i}
           value={letter}
+          guess={guess}
+          guesses={guesses}
           status={statuses[i]}
           position={i}
           isRevealing={isRevealing}
