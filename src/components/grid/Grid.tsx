@@ -7,9 +7,10 @@ type Props = {
   guesses: string[]
   currentGuess: string
   isRevealing?: boolean
+  onShowHint: (possibleLetters: string[]) => void
 }
 
-export const Grid = ({ guesses, currentGuess, isRevealing }: Props) => {
+export const Grid = ({ guesses, currentGuess, isRevealing, onShowHint }: Props) => {
   const empties =
     guesses.length < MAX_CHALLENGES - 1
       ? Array.from(Array(MAX_CHALLENGES - 1 - guesses.length))
@@ -23,6 +24,7 @@ export const Grid = ({ guesses, currentGuess, isRevealing }: Props) => {
           guesses={guesses}
           guess={guess}
           isRevealing={isRevealing && guesses.length - 1 === i}
+          onShowHint={onShowHint}
         />
       ))}
       {guesses.length < MAX_CHALLENGES && <CurrentRow guess={currentGuess} />}

@@ -9,6 +9,7 @@ type Props = {
   onEnter: () => void
   guesses: string[]
   isRevealing?: boolean
+  possibleLetters: string[]
 }
 
 export const Keyboard = ({
@@ -17,6 +18,7 @@ export const Keyboard = ({
   onEnter,
   guesses,
   isRevealing,
+  possibleLetters,
 }: Props) => {
   const charStatuses = getDistances(guesses)
 
@@ -52,23 +54,23 @@ export const Keyboard = ({
   return (
     <div>
       <div className="flex justify-center mb-1">
-        {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
+        {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map((key) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
-            status={charStatuses[key]}
+            status={possibleLetters.includes(key) ? 0 : 5}
             isRevealing={isRevealing}
           />
         ))}
       </div>
       <div className="flex justify-center mb-1">
-        {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
+        {['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'].map((key) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
-            status={charStatuses[key]}
+            status={possibleLetters.includes(key) ? 0 : 5}
             isRevealing={isRevealing}
           />
         ))}
@@ -77,12 +79,12 @@ export const Keyboard = ({
         <Key width={65.4} value="ENTER" onClick={onClick}>
           {ENTER_TEXT}
         </Key>
-        {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
+        {['U', 'V', 'W', 'X', 'Y', 'Z'].map((key) => (
           <Key
             value={key}
             key={key}
             onClick={onClick}
-            status={charStatuses[key]}
+            status={possibleLetters.includes(key) ? 0 : 5}
             isRevealing={isRevealing}
           />
         ))}

@@ -87,6 +87,8 @@ function App() {
     useState(false)
   const [missingLetterMessage, setIsMissingLetterMessage] = useState('')
 
+  const [possibleLetters, setPossibleLetters] = useState([''])
+
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
@@ -225,6 +227,9 @@ function App() {
         guesses={guesses}
         currentGuess={currentGuess}
         isRevealing={isRevealing}
+        onShowHint={(letters: string[]) => {
+          setPossibleLetters(letters)
+        }}
       />
       <Keyboard
         onChar={onChar}
@@ -232,6 +237,7 @@ function App() {
         onEnter={onEnter}
         guesses={guesses}
         isRevealing={isRevealing}
+        possibleLetters={possibleLetters}
       />
       <InfoModal
         isOpen={isInfoModalOpen}

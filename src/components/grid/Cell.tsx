@@ -12,6 +12,7 @@ type Props = {
   isRevealing?: boolean
   isCompleted?: boolean
   position?: number
+  onShowHint?: (possibleLetters: string[]) => void
 }
 
 export const Cell = ({
@@ -22,6 +23,7 @@ export const Cell = ({
   isRevealing,
   isCompleted,
   position = 0,
+  onShowHint,
 }: Props) => {
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -45,11 +47,13 @@ export const Cell = ({
     }
     if (position != undefined) {
       let possibleLetters = getPossibleLetters(guesses, position)
-      if (possibleLetters.length <= 1) {
+      if (possibleLetters.length < 1) {
         return
       }
+      if (onShowHint != null) {
+        onShowHint(possibleLetters)
+      }
     }
-    setIsLetterHintModalOpen(true);
   };
 
   const classes = classnames(

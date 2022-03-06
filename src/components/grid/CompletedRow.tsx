@@ -5,9 +5,10 @@ type Props = {
   guess: string
   guesses: string[]
   isRevealing?: boolean
+  onShowHint: (possibleLetters: string[]) => void
 }
 
-export const CompletedRow = ({ guess, guesses, isRevealing }: Props) => {
+export const CompletedRow = ({ guess, guesses, isRevealing, onShowHint }: Props) => {
   const statuses = getGuessDistances(guess)
 
   return (
@@ -22,6 +23,7 @@ export const CompletedRow = ({ guess, guesses, isRevealing }: Props) => {
           position={i}
           isRevealing={isRevealing}
           isCompleted
+          onShowHint={onShowHint}
         />
       ))}
     </div>
